@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: mqtt
+
+server:
+  port: 9092
+
+mqtt:
+  # broker: tcp://localhost:1883
+  broker: tcp://broker.emqx.io:1883
+  client-id: spring-boot-client
+  default-topic: sensor/data
+  qos: 1
