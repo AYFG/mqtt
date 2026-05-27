@@ -62,10 +62,21 @@ public class MqttConfig {
     @ServiceActivator(inputChannel = "mqttInputChannel")
     public MessageHandler mqttMessageHandler() {
         return message -> {
-            System.out.println("📨 MQTT 수신");
+            Object topic = message.getHeaders().get("mqtt_receivedTopic");
+            Object qos = message.getHeaders().get("mqtt_receivedQos");
+            Object retained = message.getHeaders().get("mqtt_receivedRetained");
+            Object duplicate = message.getHeaders().get("mqtt_duplicate");
+
+            System.out.println("\n================ MQTT MESSAGE ================");
+            System.out.println("Topic     : " + topic);
+            System.out.println("QoS       : " + qos);
+            System.out.println("Retained  : " + retained);
+            System.out.println("Duplicate : " + duplicate);
+            System.out.println("Payload   : " + message.getPayload());
+            System.out.println("---------------- Spring Headers --------------");
             message.getHeaders().forEach((key, value) ->
-                System.out.println("   Header: " + key + " = " + value));
-            System.out.println("   Payload: " + message.getPayload());
+                    System.out.println(key + " = " + value));
+            System.out.println("==============================================\n");
         };
     }
 
